@@ -9,13 +9,31 @@ describe Account do
     end
 
     it "initializes with an opening balance of 0" do
-      expect(subject.balance).to eq(0)
+      expect(subject.balance).to eq(0.00)
     end
   end
 
-  describe "withdraw" do
+  describe "#withdraw" do
     it "takes a param to withdraw" do
-      expect { subject.withdraw(100) }.not_to raise_error
+      expect { subject.withdraw(100.00) }.not_to raise_error
+    end
+
+    it "reduces the balance by the given amount" do
+      expect { subject.withdraw(100.00) }.not_to raise_error
+    end
+
+    describe "correctly calculates when given negative or positive amount" do
+      it "reduces balance by correct value when given positive number" do
+        account = Account.new
+        expect { account.withdraw(100.00) }.to change { account.balance }.by(-100.00)
+        expect(account.balance).to eq(-100.00)
+      end
+
+      it "reduces balance by correct value when given negative number" do
+        account = Account.new
+        expect { account.withdraw(-100.00) }.to change { account.balance }.by(-100.00)
+        expect(account.balance).to eq(-100.00)
+      end
     end
   end
 end
