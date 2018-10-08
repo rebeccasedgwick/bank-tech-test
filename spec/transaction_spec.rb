@@ -20,6 +20,7 @@ describe Account do
 
     it "reduces the balance by the given amount" do
       expect { subject.withdraw(100.00) }.not_to raise_error
+      expect(subject.balance).to eq(-100)
     end
 
     describe "correctly calculates when given negative or positive amount" do
@@ -31,6 +32,29 @@ describe Account do
       it "reduces balance by correct value when given negative number" do
         expect { subject.withdraw(-100.00) }.to change { subject.balance }.by(-100.00)
         expect(subject.balance).to eq(-100.00)
+      end
+    end
+  end
+
+  describe "#deposit" do
+    it "takes a param to withdraw" do
+      expect { subject.deposit(100.00) }.not_to raise_error
+    end
+
+    it "increases the balance by the given amount" do
+      expect { subject.deposit(100.00) }.not_to raise_error
+      expect(subject.balance).to eq(100.00)
+    end
+
+    describe "correctly calculates when given negative or positive amount" do
+      it "increases balance by correct value when given positive number" do
+        expect { subject.deposit(100.00) }.to change { subject.balance }.by(100.00)
+        expect(subject.balance).to eq(100.00)
+      end
+
+      it "increases balance by correct value when given negative number" do
+        expect { subject.deposit(-100.00) }.to change { subject.balance }.by(100.00)
+        expect(subject.balance).to eq(100.00)
       end
     end
   end
