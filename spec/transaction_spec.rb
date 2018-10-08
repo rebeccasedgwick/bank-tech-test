@@ -24,15 +24,13 @@ describe Account do
 
     describe "correctly calculates when given negative or positive amount" do
       it "reduces balance by correct value when given positive number" do
-        account = Account.new
-        expect { account.withdraw(100.00) }.to change { account.balance }.by(-100.00)
-        expect(account.balance).to eq(-100.00)
+        expect { subject.withdraw(100.00) }.to change { subject.balance }.by(-100.00)
+        expect(subject.balance).to eq(-100.00)
       end
 
       it "reduces balance by correct value when given negative number" do
-        account = Account.new
-        expect { account.withdraw(-100.00) }.to change { account.balance }.by(-100.00)
-        expect(account.balance).to eq(-100.00)
+        expect { subject.withdraw(-100.00) }.to change { subject.balance }.by(-100.00)
+        expect(subject.balance).to eq(-100.00)
       end
     end
   end
