@@ -7,11 +7,13 @@ class Account
   end
 
   def withdraw(amount)
-    @balance = @balance - (amount.abs)
+    @balance = @balance - amount.abs
+    @transactions << -amount.abs
   end
 
   def deposit(amount)
-    @balance = @balance + (amount.abs)
+    @balance = @balance + amount.abs
+    @transactions << amount.abs
   end
   ## NOTE: Currently keeping the #.abs method on #deposit in case deposit / withdraw are renamed to credit / debit, which can be confused easily depending on whether you're considering this from the customer of bank's point of view.
 end

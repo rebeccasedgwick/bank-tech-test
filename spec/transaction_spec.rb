@@ -34,6 +34,13 @@ describe Account do
         expect(subject.balance).to eq(-100.00)
       end
     end
+
+    describe "adds withdrawals to transactions" do
+      it "adds a withdrawl amount as a negative float to transactions array" do
+        subject.withdraw(100.00)
+        expect(subject.transactions).to include(-100.00)
+      end
+    end
   end
 
   describe "#deposit" do
@@ -55,6 +62,13 @@ describe Account do
       it "increases balance by correct value when given negative number" do
         expect { subject.deposit(-100.00) }.to change { subject.balance }.by(100.00)
         expect(subject.balance).to eq(100.00)
+      end
+    end
+
+    describe "adds deposits to transactions" do
+      it "adds a deposited amount as a positive float to transactions array" do
+        subject.deposit(500.00)
+        expect(subject.transactions).to include(500.00)
       end
     end
   end
