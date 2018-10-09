@@ -28,7 +28,7 @@ class Account
 
   def statement
     puts headers
-    @transactions.each do |transaction|
+    @transactions.reverse_each do |transaction|
       puts "#{transaction.date.ljust(10, " ")} || #{transaction.credit.to_s.rjust(10, " ")} || #{transaction.debit.to_s.rjust(10, " ")} || #{transaction.balance.to_s.rjust(10, " ")}"
     end
   end
