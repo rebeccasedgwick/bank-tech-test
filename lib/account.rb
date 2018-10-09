@@ -12,7 +12,7 @@ class Account
   def withdraw(date, amount)
     date = date_formatter(date)
     @balance = @balance - amount.abs
-    @transactions << [date, -(amount.abs)]
+    @transactions << Transaction.new.debit(date, amount, @balance)
   end
 
   def deposit(date, amount)
@@ -20,7 +20,6 @@ class Account
     @balance = @balance + amount.abs
     @transactions << [date, amount.abs]
   end
-  ## NOTE: Currently keeping the #.abs method on #deposit in case deposit / withdraw are renamed to credit / debit, which can be confused easily depending on whether you're considering this from the customer of bank's point of view.
 
   def date_formatter(date)
     date = date.split("-").reverse!.join("-")

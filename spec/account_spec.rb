@@ -15,24 +15,31 @@ describe Account do
   end
 
   describe "#withdraw" do
-    it "reduces the balance by the given amount" do
-      subject.withdraw(date, -100.00)
-      expect(subject.balance).to eq(-100.00)
+    context "creating a new transaction" do
+      it "creates a new transaction item from the given params" do
+        withdraw_double = double(date: "01-01-2001", amount: -100.00)
+        subject.withdraw(withdraw_double.date, withdraw_double.amount)
+
+        expect(subject.transactions[0]).to be_a(Transaction)
+        expect { subject.withdraw(withdraw_double.date, withdraw_double.amount) }.to change { subject.transactions.length }.by(1)
+      end
     end
 
-    it "reduces balance by correct value when given positive number" do
-      expect { subject.withdraw(date, 100.00) }.to change { subject.balance }.by(-100.00)
-      expect(subject.balance).to eq(-100.00)
-    end
+    context "updating the account balance" do
+      it "reduces the balance by the given amount" do
+        subject.withdraw(date, -100.00)
+        expect(subject.balance).to eq(-100.00)
+      end
 
-    it "reduces balance by correct value when given negative number" do
-      expect { subject.withdraw(date, -100.00) }.to change { subject.balance }.by(-100.00)
-      expect(subject.balance).to eq(-100.00)
-    end
+      it "reduces balance by correct value when given positive number" do
+        expect { subject.withdraw(date, 100.00) }.to change { subject.balance }.by(-100.00)
+        expect(subject.balance).to eq(-100.00)
+      end
 
-    it "adds a withdrawl amount as a negative float to transactions array" do
-      subject.withdraw(date, 100.00)
-      expect(subject.transactions[0]).to include(-100.00)
+      it "reduces balance by correct value when given negative number" do
+        expect { subject.withdraw(date, -100.00) }.to change { subject.balance }.by(-100.00)
+        expect(subject.balance).to eq(-100.00)
+      end
     end
   end
 
