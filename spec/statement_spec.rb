@@ -18,8 +18,6 @@ describe Statement do
 
       expect(subject.show).to be_an(Array)
       expect(subject.show).to include(["transaction item", "transaction item 2"])
-
     end
   end
-
 end

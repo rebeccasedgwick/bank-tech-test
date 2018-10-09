@@ -7,8 +7,4 @@ class Statement
   def show
     @account.transactions
   end
-
-
-
-
 end
