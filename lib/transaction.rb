@@ -2,9 +2,9 @@ class Transaction
   attr_reader :date, :debit, :credit, :balance
 
   def initialize
-    @date = nil
-    @credit = nil
-    @debit = nil
+    @date = ""
+    @credit = 0.00
+    @debit = 0.00
     @balance = 0.00
   end
 
