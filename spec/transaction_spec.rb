@@ -26,4 +26,19 @@ describe Transaction do
       expect { subject.withdraw("11/01/2011", 500, -500) }.to change { subject.balance }.by(-500)
     end
   end
+
+  describe "#deposit" do
+    it "updates the date of a transaction" do
+      subject.deposit("22/02/2022", 500, 500)
+      expect(subject.date).to eq("22/02/2022")
+    end
+
+    it "changes the debit amount of a transaction" do
+      expect { subject.deposit("22/02/2022", 500, 500) }.to change { subject.credit }.by(500)
+    end
+
+    it "changes the balance of a transaction" do
+      expect { subject.deposit("22/02/2022", 500, 500) }.to change { subject.balance }.by(500)
+    end
+  end
 end

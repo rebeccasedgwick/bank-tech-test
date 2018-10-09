@@ -14,4 +14,11 @@ class Transaction
     @balance = balance
     self
   end
+
+  def deposit(date, amount, balance)
+    @date = date
+    @credit = amount
+    @balance = balance
+    self
+  end
 end
