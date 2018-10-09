@@ -8,7 +8,7 @@ class Transaction
     @balance = 0.00
   end
 
-  def debit(date, amount, balance)
+  def withdraw(date, amount, balance)
     @date = date
     @debit = amount
     @balance = balance

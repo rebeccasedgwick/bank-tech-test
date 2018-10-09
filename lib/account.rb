@@ -12,7 +12,7 @@ class Account
   def withdraw(date, amount)
     date = date_formatter(date)
     @balance = @balance - amount.abs
-    @transactions << Transaction.new.debit(date, amount, @balance)
+    @transactions << Transaction.new.withdraw(date, amount, @balance)
   end
 
   def deposit(date, amount)
