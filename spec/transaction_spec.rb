@@ -16,9 +16,9 @@ describe Account do
 
   describe "#withdraw" do
     it "reduces the balance by the given amount" do
-    subject.withdraw(date, -100.00)
-    expect(subject.balance).to eq(-100.00)
-  end
+      subject.withdraw(date, -100.00)
+      expect(subject.balance).to eq(-100.00)
+    end
 
     it "reduces balance by correct value when given positive number" do
       expect { subject.withdraw(date, 100.00) }.to change { subject.balance }.by(-100.00)
@@ -35,7 +35,6 @@ describe Account do
       expect(subject.transactions[0]).to include(-100.00)
     end
   end
-
 
   describe "#deposit" do
     it "increases the balance by the given amount" do
