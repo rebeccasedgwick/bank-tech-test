@@ -1,6 +1,5 @@
 require "date"
 require_relative "transaction"
-require_relative "statement"
 
 class Account
   attr_reader :transactions, :balance
@@ -25,5 +24,17 @@ class Account
   def date_formatter(date)
     date = date.split("-").reverse!.join("-")
     Date.strptime(date).strftime("%d/%m/%Y")
+  end
+
+  def statement
+    puts headers
+    @transactions.each do |transaction|
+      puts "#{transaction.date.ljust(10, " ")} || #{transaction.credit.to_s.rjust(10, " ")} || #{transaction.debit.to_s.rjust(10, " ")} || #{transaction.balance.to_s.rjust(10, " ")}"
+    end
+  end
+
+  private
+  def headers
+    "date       || credit     || debit      || balance   "
   end
 end

@@ -78,4 +78,16 @@ describe Account do
       expect(subject.date_formatter(date_test)).to eq("13/01/2012")
     end
   end
+
+  describe "statement" do
+    it "has column headers displayed and pretty prints the statement transactions" do
+      tr_dbl1 = double(date: "01/06/2011", debit: 0.00, credit: 500.00, balance: 750.00)
+      tr_dbl2 = double(date: "01/05/2011", debit: 50.00, credit: 0.00, balance: 250.00)
+
+      subject.instance_variable_set(:@transactions, [tr_dbl1, tr_dbl2])
+      expected_string = "date       || credit     || debit      || balance   \n01/06/2011 ||      500.0 ||        0.0 ||      750.0\n01/05/2011 ||        0.0 ||       50.0 ||      250.0\n"
+
+      expect { subject.statement }.to output(expected_string).to_stdout
+    end
+  end
 end
