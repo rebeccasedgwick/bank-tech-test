@@ -22,6 +22,7 @@ class Account
   ## NOTE: Currently keeping the #.abs method on #deposit in case deposit / withdraw are renamed to credit / debit, which can be confused easily depending on whether you're considering this from the customer of bank's point of view.
 
   def date_formatter(date)
+    date = date.split("-").reverse!.join("-")
     Date.strptime(date).strftime("%d/%m/%Y")
   end
 end

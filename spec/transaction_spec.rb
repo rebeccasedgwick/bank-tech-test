@@ -57,4 +57,11 @@ describe Account do
       expect(subject.transactions[0]).to include(500.00)
     end
   end
+
+  describe "#date_formatter" do
+    it "converts a given string to a time" do
+      date_test = "13-01-2012"
+      expect(subject.date_formatter(date_test)).to eq("13/01/2012")
+    end
+  end
 end
