@@ -18,7 +18,7 @@ class Account
   def deposit(date, amount)
     date = date_formatter(date)
     @balance = @balance + amount.abs
-    @transactions << [date, amount.abs]
+    @transactions << Transaction.new.deposit(date, amount, @balance)
   end
 
   def date_formatter(date)

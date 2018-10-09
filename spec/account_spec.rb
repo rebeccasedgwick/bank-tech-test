@@ -44,24 +44,31 @@ describe Account do
   end
 
   describe "#deposit" do
-    it "increases the balance by the given amount" do
-      subject.deposit(date, 100.00)
-      expect(subject.balance).to eq(100.00)
+    context "creating a new transaction" do
+      it "Creates a new transaction item from the given params" do
+        deposit_double = double(date: "02-02-2012", amount: 200.00)
+        subject.deposit(deposit_double.date, deposit_double.amount)
+
+        expect(subject.transactions[0]).to be_a(Transaction)
+        expect { subject.deposit(deposit_double.date, deposit_double.amount) }.to change { subject.transactions.length }.by(1)
+      end
     end
 
-    it "increases balance by correct value when given positive number" do
-      expect { subject.deposit(date, 100.00) }.to change { subject.balance }.by(100.00)
-      expect(subject.balance).to eq(100.00)
-    end
+    context "updating the account balance" do
+      it "increases the balance by the given amount" do
+        subject.deposit(date, 100.00)
+        expect(subject.balance).to eq(100.00)
+      end
 
-    it "increases balance by correct value when given negative number" do
-      expect { subject.deposit(date, -100.00) }.to change { subject.balance }.by(100.00)
-      expect(subject.balance).to eq(100.00)
-    end
+      it "increases balance by correct value when given positive number" do
+        expect { subject.deposit(date, 100.00) }.to change { subject.balance }.by(100.00)
+        expect(subject.balance).to eq(100.00)
+      end
 
-    it "adds a deposited amount as a positive float to transactions array" do
-      subject.deposit(date, 500.00)
-      expect(subject.transactions[0]).to include(500.00)
+      it "increases balance by correct value when given negative number" do
+        expect { subject.deposit(date, -100.00) }.to change { subject.balance }.by(100.00)
+        expect(subject.balance).to eq(100.00)
+      end
     end
   end
 
