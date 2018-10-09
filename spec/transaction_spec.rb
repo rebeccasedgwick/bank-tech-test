@@ -41,5 +41,4 @@ describe Transaction do
       expect { subject.deposit("22/02/2022", 500, 500) }.to change { subject.balance }.by(500)
     end
   end
-
 end
