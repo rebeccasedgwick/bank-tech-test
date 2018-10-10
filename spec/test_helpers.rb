@@ -11,7 +11,7 @@ end
 
 def make_withdrawal
   transaction_date = "13-03-2013"
-  @account.withdraw(transaction_date, 50.00)
+  @account.withdraw(transaction_date, -50.00)
 end
 
 def account_balance_increases

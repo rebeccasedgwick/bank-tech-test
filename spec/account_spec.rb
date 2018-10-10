@@ -31,14 +31,24 @@ describe Account do
         expect(subject.balance).to eq(-100.00)
       end
 
-      it "reduces balance by correct value when given positive number" do
-        expect { subject.withdraw(date, 100.00) }.to change { subject.balance }.by(-100.00)
-        expect(subject.balance).to eq(-100.00)
+      it "reduces balance by correct value when given negative number" do
+        subject.instance_variable_set(:@balance, 100)
+        expect { subject.withdraw(date, -100.00) }.to change { subject.balance }.by(-100.00)
+        expect(subject.balance).to eq(0)
+      end
+    end
+
+    context "given a positive number" do
+      it "raises an error" do
+        expect { subject.withdraw(date, 100.00) }.to raise_error("Please enter a valid number")
       end
 
-      it "reduces balance by correct value when given negative number" do
-        expect { subject.withdraw(date, -100.00) }.to change { subject.balance }.by(-100.00)
-        expect(subject.balance).to eq(-100.00)
+      it "doesn't decrease the balance" do
+        begin
+          subject.withdraw(date, 100.00)
+        rescue
+        end
+        expect(subject.balance).not_to eq(-100)
       end
     end
   end

@@ -13,14 +13,14 @@ class Account
   def withdraw(date, amount)
     raise "Please enter a valid number" if amount.positive?
     date = date_formatter(date)
-    @balance = @balance - amount.abs
+    @balance = @balance + amount
     @transactions << Transaction.new.withdraw(date, amount, @balance)
   end
 
   def deposit(date, amount)
     raise "Please enter a valid number" if !amount.positive?
     date = date_formatter(date)
-    @balance = @balance + amount.abs
+    @balance = @balance + amount
     @transactions << Transaction.new.deposit(date, amount, @balance)
   end
 
@@ -28,8 +28,8 @@ class Account
     puts headers
     @transactions.reverse_each do |transaction|
       puts "#{transaction.date.ljust(10, " ")} ||\
-      #{num_formatter(transaction.credit).to_s.rjust(6, " ")} ||\
-      #{num_formatter(transaction.debit).to_s.rjust(6, " ")} ||\
+      #{num_formatter(transaction.credit.abs).to_s.rjust(6, " ")} ||\
+      #{num_formatter(transaction.debit.abs).to_s.rjust(6, " ")} ||\
       #{num_formatter(transaction.balance).to_s.rjust(6, " ")}"
     end
   end
