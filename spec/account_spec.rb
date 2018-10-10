@@ -24,7 +24,7 @@ describe Account do
 
     context "creating a new transaction" do
       it "creates a new transaction item from the given params" do
-        expect(transaction_class_double).to receive(:new).with("11/11/2011", -100, 0.0).and_return(transaction_double)
+        expect(transaction_class_double).to receive(:new).with(Date.new(2011, 11, 11), -100, 0.0).and_return(transaction_double)
 
         expect {
           subject.withdraw(date, -100.00, transaction_class: transaction_class_double)
@@ -36,7 +36,7 @@ describe Account do
 
     context "updating the account balance" do
       it "reduces the balance by the given amount" do
-        expect(transaction_class_double).to receive(:new).with("11/11/2011", -100, 0.0).and_return(transaction_double)
+        expect(transaction_class_double).to receive(:new).with(Date.new(2011, 11, 11), -100, 0.0).and_return(transaction_double)
 
         subject.withdraw(date, -100.00, transaction_class: transaction_class_double)
         expect(subject.balance).to eq(0.0)
@@ -61,7 +61,7 @@ describe Account do
   describe "#deposit" do
     context "creating a new transaction" do
       it "Creates a new transaction item from the given params" do
-        expect(transaction_class_double).to receive(:new).with("11/11/2011", 100, 100.0).and_return(transaction_double)
+        expect(transaction_class_double).to receive(:new).with(Date.new(2011, 11, 11), 100, 100.0).and_return(transaction_double)
 
         expect {
           subject.deposit(date, 100.00, transaction_class: transaction_class_double)
@@ -73,7 +73,7 @@ describe Account do
 
     context "updating the account balance" do
       it "increases balance by correct value when given positive number" do
-        expect(transaction_class_double).to receive(:new).with("11/11/2011", 100, 100.0).and_return(transaction_double)
+        expect(transaction_class_double).to receive(:new).with(Date.new(2011, 11, 11), 100, 100.0).and_return(transaction_double)
 
         subject.deposit(date, 100.00, transaction_class: transaction_class_double)
         expect(subject.balance).to eq(100.00)
@@ -97,8 +97,8 @@ describe Account do
 
   describe "statement" do
     it "has column headers displayed and pretty prints the statement transactions" do
-      tr_dbl1 = double(date: "01/06/2011", debit: 0.00, credit: 500.00, balance: 750.00)
-      tr_dbl2 = double(date: "01/05/2011", debit: 50.00, credit: 0.00, balance: 250.00)
+      tr_dbl1 = double(date: Date.new(2011, 6, 1), debit: 0.00, credit: 500.00, balance: 750.00)
+      tr_dbl2 = double(date: Date.new(2011, 5, 1), debit: 50.00, credit: 0.00, balance: 250.00)
 
       subject.instance_variable_set(:@transactions, [tr_dbl1, tr_dbl2])
       expected_string = "date       || credit      || debit       || balance    \n01/05/2011 ||        0.00 ||       50.00 ||      250.00\n01/06/2011 ||      500.00 ||        0.00 ||      750.00\n"
@@ -107,8 +107,8 @@ describe Account do
     end
 
     it "transactions are displayed in reverse chronological order" do
-      tr_dbl1 = double(date: "01/01/2011", debit: 50.00, credit: 0.00, balance: 250.00)
-      tr_dbl2 = double(date: "01/02/2011", debit: 0.00, credit: 500.00, balance: 750.00)
+      tr_dbl1 = double(date: Date.new(2011, 1, 1), debit: 50.00, credit: 0.00, balance: 250.00)
+      tr_dbl2 = double(date: Date.new(2011, 2, 1), debit: 0.00, credit: 500.00, balance: 750.00)
 
       subject.instance_variable_set(:@transactions, [tr_dbl1, tr_dbl2])
       expected_string = "date       || credit      || debit       || balance    \n01/02/2011 ||      500.00 ||        0.00 ||      750.00\n01/01/2011 ||        0.00 ||       50.00 ||      250.00\n"

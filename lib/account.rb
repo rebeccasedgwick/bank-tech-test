@@ -10,16 +10,16 @@ class Account
     @balance = 0.00
   end
 
-  def withdraw(date, amount, transaction_class: Transaction)
+  def withdraw(date_input, amount, transaction_class: Transaction)
     raise "Please enter a valid number" if amount.positive?
-    date = date_formatter(date)
+    date = convert_date_input(date_input)
     balance_update(amount)
     @transactions << transaction_class.new(date, amount, @balance)
   end
 
-  def deposit(date, amount, transaction_class: Transaction)
+  def deposit(date_input, amount, transaction_class: Transaction)
     raise "Please enter a valid number" if !amount.positive?
-    date = date_formatter(date)
+    date = convert_date_input(date_input)
     balance_update(amount)
     @transactions << transaction_class.new(date, amount, @balance)
   end
@@ -28,7 +28,7 @@ class Account
     puts headers
     @transactions.reverse_each do |transaction|
       puts [
-        transaction.date.ljust(10, " "),
+        date_prettify(transaction.date).ljust(10, " "),
         num_formatter(transaction.credit).rjust(12, " "),
         num_formatter(transaction.debit).rjust(12, " "),
         num_formatter(transaction.balance).rjust(12, " ")
@@ -41,9 +41,13 @@ class Account
     @balance = balance + amount
   end
 
-  def date_formatter(date)
-    date = date.split("-").reverse!.join("-")
-    Date.strptime(date).strftime("%d/%m/%Y")
+  def convert_date_input(date)
+    # date = date.split("-").reverse!.join("-")
+    Date.strptime(date, "%d-%m-%Y")
+  end
+
+  def date_prettify(date)
+    date.strftime("%d/%m/%Y")
   end
 
   def num_formatter(num)
