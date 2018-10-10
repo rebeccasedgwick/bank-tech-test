@@ -28,8 +28,8 @@ class Account
     puts headers
     @transactions.reverse_each do |transaction|
       puts "#{transaction.date.ljust(10, " ")} ||\
-      #{num_formatter(transaction.credit.abs).to_s.rjust(6, " ")} ||\
-      #{num_formatter(transaction.debit.abs).to_s.rjust(6, " ")} ||\
+      #{num_formatter(transaction.credit).to_s.rjust(6, " ")} ||\
+      #{num_formatter(transaction.debit).to_s.rjust(6, " ")} ||\
       #{num_formatter(transaction.balance).to_s.rjust(6, " ")}"
     end
   end
@@ -45,7 +45,7 @@ class Account
   end
 
   def num_formatter(num)
-    "%.2f" % (BigDecimal(num, 2))
+    "%.2f" % (BigDecimal(num.to_f.abs, 2))
   end
 
   def headers

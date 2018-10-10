@@ -1,6 +1,6 @@
 require "transaction"
 
-describe Transaction, focus: true do
+describe Transaction do
   describe "#initialize" do
     context "sorting debits and credits" do
       it "allocates positive amounts to credits" do
