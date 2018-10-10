@@ -11,6 +11,7 @@ class Account
   end
 
   def withdraw(date, amount)
+    raise "Please enter a valid number" if amount.positive?
     date = date_formatter(date)
     @balance = @balance - amount.abs
     @transactions << Transaction.new.withdraw(date, amount, @balance)

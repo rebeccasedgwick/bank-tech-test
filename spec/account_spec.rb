@@ -64,19 +64,19 @@ describe Account do
         expect { subject.deposit(date, 100.00) }.to change { subject.balance }.by(100.00)
         expect(subject.balance).to eq(100.00)
       end
+    end
 
-      context "given a negative number" do
-        it "raises an error" do
-          expect { subject.deposit(date, -100.00) }.to raise_error("Please enter a valid number")
-        end
+    context "given a negative number" do
+      it "raises an error" do
+        expect { subject.deposit(date, -100.00) }.to raise_error("Please enter a valid number")
+      end
 
-        it "doesn't increase the balance if given a negative number" do
-          begin
-            subject.deposit(date, -100.00)
-          rescue
-          end
-          expect(subject.balance).to eq(0)
+      it "doesn't increase the balance" do
+        begin
+          subject.deposit(date, -100.00)
+        rescue
         end
+        expect(subject.balance).to eq(0)
       end
     end
   end
