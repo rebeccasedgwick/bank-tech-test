@@ -24,7 +24,7 @@ end
 
 def displays_statement
   ## NOTE: to be changed to 2dp numbers for money
-  expect(STDOUT).to receive(:puts).with(    "date       || credit      || debit       || balance    ")
+  expect(STDOUT).to receive(:puts).with("date       || credit      || debit       || balance    ")
   expect(STDOUT).to receive(:puts).with("13/03/2013 ||        0.00 ||       50.00 ||       50.00")
   expect(STDOUT).to receive(:puts).with("12/02/2012 ||      100.00 ||        0.00 ||      100.00")
 

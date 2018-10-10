@@ -44,6 +44,5 @@ class Account
 
   def headers
     "date       || credit      || debit       || balance    "
-
   end
 end
