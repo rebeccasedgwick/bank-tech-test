@@ -1,44 +1,20 @@
 require "transaction"
 
-describe Transaction do
-  subject { described_class.new }
-
+describe Transaction, focus: true do
   describe "#initialize" do
-    it "returns the date, credit, debit, and balance of a transaction" do
-      expect(subject.date).to eq("")
-      expect(subject.credit).to eq(0.00)
-      expect(subject.debit).to eq(0.00)
-      expect(subject.balance).to eq(0.00)
-    end
-  end
-
-  describe "#withdraw" do
-    it "updates the date of a transaction" do
-      subject.withdraw("11/01/2011", 500, -500)
-      expect(subject.date).to eq("11/01/2011")
-    end
-
-    it "changes the debit amount of a transaction" do
-      expect { subject.withdraw("11/01/2011", 500, -500) }.to change { subject.debit }.by(500)
-    end
-
-    it "changes the balance of a transaction" do
-      expect { subject.withdraw("11/01/2011", 500, -500) }.to change { subject.balance }.by(-500)
-    end
-  end
-
-  describe "#deposit" do
-    it "updates the date of a transaction" do
-      subject.deposit("22/02/2022", 500, 500)
-      expect(subject.date).to eq("22/02/2022")
-    end
-
-    it "changes the credit amount of a transaction" do
-      expect { subject.deposit("22/02/2022", 500, 500) }.to change { subject.credit }.by(500)
-    end
-
-    it "changes the balance of a transaction" do
-      expect { subject.deposit("22/02/2022", 500, 500) }.to change { subject.balance }.by(500)
+    context "sorting debits and credits" do
+      it "allocates positive amounts to credits" do
+        transaction = Transaction.new("11-11-2011", 100.0, 100.0)
+        expect(transaction.credit).to eq(100.0)
+        expect(transaction.debit).to eq(nil)
+        expect(transaction.balance).to eq(100.0)
+      end
+      it "allocates negative amounts to debits" do
+        transaction = Transaction.new("12-12-2012", -200.0, 200.0)
+        expect(transaction.debit).to eq(-200.0)
+        expect(transaction.credit).to eq(nil)
+        expect(transaction.balance).to eq(200.0)
+      end
     end
   end
 end
