@@ -10,18 +10,18 @@ class Account
     @balance = 0.00
   end
 
-  def withdraw(date, amount)
+  def withdraw(date, amount, transaction_class: Transaction)
     raise "Please enter a valid number" if amount.positive?
     date = date_formatter(date)
     balance_update(amount)
-    @transactions << Transaction.new.withdraw(date, amount, @balance)
+    @transactions << transaction_class.new(date, amount, @balance)
   end
 
-  def deposit(date, amount)
+  def deposit(date, amount, transaction_class: Transaction)
     raise "Please enter a valid number" if !amount.positive?
     date = date_formatter(date)
     balance_update(amount)
-    @transactions << Transaction.new.deposit(date, amount, @balance)
+    @transactions << transaction_class.new(date, amount, @balance)
   end
 
   def statement

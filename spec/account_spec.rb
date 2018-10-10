@@ -3,6 +3,9 @@ require "account"
 describe Account do
   let(:date) { "11-11-2011" }
   let(:subject) { described_class.new }
+  let(:transaction_class_double) { double }
+  let(:transaction_double) { double }
+
 
   describe "#initialize" do
     it "initializes with an array of transactions" do
@@ -15,37 +18,39 @@ describe Account do
   end
 
   describe "#withdraw" do
+    before do
+      subject.instance_variable_set(:@balance, 100)
+    end
+
     context "creating a new transaction" do
       it "creates a new transaction item from the given params" do
-        withdraw_double = double(date: "01-01-2001", amount: -100.00)
-        subject.withdraw(withdraw_double.date, withdraw_double.amount)
+        expect(transaction_class_double).to receive(:new).with("11/11/2011", -100, 0.0).and_return(transaction_double)
 
-        expect(subject.transactions[0]).to be_a(Transaction)
-        expect { subject.withdraw(withdraw_double.date, withdraw_double.amount) }.to change { subject.transactions.length }.by(1)
+        expect {
+          subject.withdraw(date, -100.00, transaction_class: transaction_class_double)
+        }.to change { subject.transactions.length }.by(1)
+
+        expect(subject.transactions.last).to eq(transaction_double)
       end
     end
 
     context "updating the account balance" do
       it "reduces the balance by the given amount" do
-        subject.withdraw(date, -100.00)
-        expect(subject.balance).to eq(-100.00)
-      end
+        expect(transaction_class_double).to receive(:new).with("11/11/2011", -100, 0.0).and_return(transaction_double)
 
-      it "reduces balance by correct value when given negative number" do
-        subject.instance_variable_set(:@balance, 100)
-        expect { subject.withdraw(date, -100.00) }.to change { subject.balance }.by(-100.00)
-        expect(subject.balance).to eq(0)
+        subject.withdraw(date, -100.00, transaction_class: transaction_class_double)
+        expect(subject.balance).to eq(0.0)
       end
     end
 
     context "given a positive number" do
       it "raises an error" do
-        expect { subject.withdraw(date, 100.00) }.to raise_error("Please enter a valid number")
+        expect { subject.withdraw(date, 100.00, transaction_class: transaction_class_double) }.to raise_error("Please enter a valid number")
       end
 
       it "doesn't decrease the balance" do
         begin
-          subject.withdraw(date, 100.00)
+          subject.withdraw(date, 100.00, transaction_class: transaction_class_double)
         rescue
         end
         expect(subject.balance).not_to eq(-100)
@@ -56,34 +61,33 @@ describe Account do
   describe "#deposit" do
     context "creating a new transaction" do
       it "Creates a new transaction item from the given params" do
-        deposit_double = double(date: "02-02-2012", amount: 200.00)
-        subject.deposit(deposit_double.date, deposit_double.amount)
+        expect(transaction_class_double).to receive(:new).with("11/11/2011", 100, 100.0).and_return(transaction_double)
 
-        expect(subject.transactions[0]).to be_a(Transaction)
-        expect { subject.deposit(deposit_double.date, deposit_double.amount) }.to change { subject.transactions.length }.by(1)
+        expect {
+          subject.deposit(date, 100.00, transaction_class: transaction_class_double)
+        }.to change { subject.transactions.length }.by(1)
+
+        expect(subject.transactions.last).to eq(transaction_double)
       end
     end
 
     context "updating the account balance" do
-      it "increases the balance by the given amount" do
-        subject.deposit(date, 100.00)
-        expect(subject.balance).to eq(100.00)
-      end
-
       it "increases balance by correct value when given positive number" do
-        expect { subject.deposit(date, 100.00) }.to change { subject.balance }.by(100.00)
+        expect(transaction_class_double).to receive(:new).with("11/11/2011", 100, 100.0).and_return(transaction_double)
+
+        subject.deposit(date, 100.00, transaction_class: transaction_class_double)
         expect(subject.balance).to eq(100.00)
       end
     end
 
     context "given a negative number" do
       it "raises an error" do
-        expect { subject.deposit(date, -100.00) }.to raise_error("Please enter a valid number")
+        expect { subject.deposit(date, -100.00, transaction_class: transaction_class_double) }.to raise_error("Please enter a valid number")
       end
 
       it "doesn't increase the balance" do
         begin
-          subject.deposit(date, -100.00)
+          subject.deposit(date, -100.00, transaction_class: transaction_class_double)
         rescue
         end
         expect(subject.balance).to eq(0)
