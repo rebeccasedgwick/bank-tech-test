@@ -1,4 +1,5 @@
 require "date"
+require "bigdecimal"
 require_relative "transaction"
 
 class Account
@@ -24,7 +25,7 @@ class Account
   def statement
     puts headers
     @transactions.reverse_each do |transaction|
-      puts "#{transaction.date.ljust(10, " ")} || #{transaction.credit.to_s.rjust(10, " ")} || #{transaction.debit.to_s.rjust(10, " ")} || #{transaction.balance.to_s.rjust(10, " ")}"
+      puts "#{transaction.date.ljust(10, " ")} || #{num_formatter(transaction.credit)} || #{num_formatter(transaction.debit)} || #{num_formatter(transaction.balance)}"
     end
   end
 
@@ -32,6 +33,10 @@ class Account
   def date_formatter(date)
     date = date.split("-").reverse!.join("-")
     Date.strptime(date).strftime("%d/%m/%Y")
+  end
+
+  def num_formatter(num)
+    "%.2f" % (BigDecimal(num, 2))
   end
 
   def headers
