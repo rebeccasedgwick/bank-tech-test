@@ -13,14 +13,14 @@ class Account
   def withdraw(date, amount)
     raise "Please enter a valid number" if amount.positive?
     date = date_formatter(date)
-    @balance = @balance + amount
+    balance_update(amount)
     @transactions << Transaction.new.withdraw(date, amount, @balance)
   end
 
   def deposit(date, amount)
     raise "Please enter a valid number" if !amount.positive?
     date = date_formatter(date)
-    @balance = @balance + amount
+    balance_update(amount)
     @transactions << Transaction.new.deposit(date, amount, @balance)
   end
 
@@ -35,6 +35,10 @@ class Account
   end
 
   private
+  def balance_update(amount)
+    @balance = balance + amount
+  end
+
   def date_formatter(date)
     date = date.split("-").reverse!.join("-")
     Date.strptime(date).strftime("%d/%m/%Y")
