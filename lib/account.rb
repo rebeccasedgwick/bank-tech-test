@@ -25,7 +25,10 @@ class Account
   def statement
     puts headers
     @transactions.reverse_each do |transaction|
-      puts "#{transaction.date.ljust(10, " ")} || #{num_formatter(transaction.credit)} || #{num_formatter(transaction.debit)} || #{num_formatter(transaction.balance)}"
+      puts "#{transaction.date.ljust(10, " ")} ||\
+      #{num_formatter(transaction.credit).to_s.rjust(6, " ")} ||\
+      #{num_formatter(transaction.debit).to_s.rjust(6, " ")} ||\
+      #{num_formatter(transaction.balance).to_s.rjust(6, " ")}"
     end
   end
 
@@ -40,6 +43,7 @@ class Account
   end
 
   def headers
-    "date       || credit     || debit      || balance   "
+    "date       || credit      || debit       || balance    "
+
   end
 end

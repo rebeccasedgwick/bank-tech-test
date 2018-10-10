@@ -78,7 +78,7 @@ describe Account do
       tr_dbl2 = double(date: "01/05/2011", debit: 50.00, credit: 0.00, balance: 250.00)
 
       subject.instance_variable_set(:@transactions, [tr_dbl1, tr_dbl2])
-      expected_string = "date       || credit     || debit      || balance   \n01/05/2011 ||        0.00 ||       50.00 ||      250.00\n01/06/2011 ||      500.00 ||        0.00 ||      750.00\n"
+      expected_string = "date       || credit      || debit       || balance    \n01/05/2011 ||        0.00 ||       50.00 ||      250.00\n01/06/2011 ||      500.00 ||        0.00 ||      750.00\n"
 
       expect { subject.statement }.to output(expected_string).to_stdout
     end
@@ -88,7 +88,7 @@ describe Account do
       tr_dbl2 = double(date: "01/02/2011", debit: 0.00, credit: 500.00, balance: 750.00)
 
       subject.instance_variable_set(:@transactions, [tr_dbl1, tr_dbl2])
-      expected_string = "date       || credit     || debit      || balance   \n01/02/2011 ||      500.00 ||        0.00 ||      750.00\n01/01/2011 ||        0.00 ||       50.00 ||      250.00\n"
+      expected_string = "date       || credit      || debit       || balance    \n01/02/2011 ||      500.00 ||        0.00 ||      750.00\n01/01/2011 ||        0.00 ||       50.00 ||      250.00\n"
 
       expect { subject.statement }.to output(expected_string).to_stdout
     end
