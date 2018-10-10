@@ -27,10 +27,12 @@ class Account
   def statement
     puts headers
     @transactions.reverse_each do |transaction|
-      puts "#{transaction.date.ljust(10, " ")} ||\
-      #{num_formatter(transaction.credit).to_s.rjust(6, " ")} ||\
-      #{num_formatter(transaction.debit).to_s.rjust(6, " ")} ||\
-      #{num_formatter(transaction.balance).to_s.rjust(6, " ")}"
+      puts [
+        transaction.date.ljust(10, " "),
+        num_formatter(transaction.credit).to_s.rjust(12, " "),
+        num_formatter(transaction.debit).to_s.rjust(12, " "),
+        num_formatter(transaction.balance).to_s.rjust(12, " ")
+      ].join(" ||")
     end
   end
 
