@@ -72,13 +72,6 @@ describe Account do
     end
   end
 
-  describe "#date_formatter" do
-    it "converts a given string to a time" do
-      date_test = "13-01-2012"
-      expect(subject.date_formatter(date_test)).to eq("13/01/2012")
-    end
-  end
-
   describe "statement" do
     it "has column headers displayed and pretty prints the statement transactions" do
       tr_dbl1 = double(date: "01/06/2011", debit: 0.00, credit: 500.00, balance: 750.00)

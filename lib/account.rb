@@ -21,11 +21,6 @@ class Account
     @transactions << Transaction.new.deposit(date, amount, @balance)
   end
 
-  def date_formatter(date)
-    date = date.split("-").reverse!.join("-")
-    Date.strptime(date).strftime("%d/%m/%Y")
-  end
-
   def statement
     puts headers
     @transactions.reverse_each do |transaction|
@@ -34,6 +29,11 @@ class Account
   end
 
   private
+  def date_formatter(date)
+    date = date.split("-").reverse!.join("-")
+    Date.strptime(date).strftime("%d/%m/%Y")
+  end
+
   def headers
     "date       || credit     || debit      || balance   "
   end
