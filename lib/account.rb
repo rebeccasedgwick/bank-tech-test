@@ -29,9 +29,9 @@ class Account
     @transactions.reverse_each do |transaction|
       puts [
         transaction.date.ljust(10, " "),
-        num_formatter(transaction.credit).to_s.rjust(12, " "),
-        num_formatter(transaction.debit).to_s.rjust(12, " "),
-        num_formatter(transaction.balance).to_s.rjust(12, " ")
+        num_formatter(transaction.credit).rjust(12, " "),
+        num_formatter(transaction.debit).rjust(12, " "),
+        num_formatter(transaction.balance).rjust(12, " ")
       ].join(" ||")
     end
   end
