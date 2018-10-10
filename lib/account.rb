@@ -17,6 +17,7 @@ class Account
   end
 
   def deposit(date, amount)
+    raise "Please enter a valid number" if !amount.positive?
     date = date_formatter(date)
     @balance = @balance + amount.abs
     @transactions << Transaction.new.deposit(date, amount, @balance)
