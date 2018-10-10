@@ -7,17 +7,19 @@ class Account
 
   def initialize
     @transactions = []
-    @balance = 0.00
+    @balance = 0
   end
 
-  def withdraw(date_input, amount, transaction_class: Transaction)
+  def withdraw(date_input, amount_input, transaction_class: Transaction)
+    amount = convert_amount_input(amount_input)
     raise "Please enter a valid number" if amount.positive?
     date = convert_date_input(date_input)
     balance_update(amount)
     @transactions << transaction_class.new(date, amount, @balance)
   end
 
-  def deposit(date_input, amount, transaction_class: Transaction)
+  def deposit(date_input, amount_input, transaction_class: Transaction)
+    amount = convert_amount_input(amount_input)
     raise "Please enter a valid number" if !amount.positive?
     date = convert_date_input(date_input)
     balance_update(amount)
@@ -38,12 +40,15 @@ class Account
 
   private
   def balance_update(amount)
-    @balance = balance + amount
+    @balance += amount
   end
 
-  def convert_date_input(date)
-    # date = date.split("-").reverse!.join("-")
-    Date.strptime(date, "%d-%m-%Y")
+  def convert_date_input(date_input)
+    Date.strptime(date_input, "%d-%m-%Y")
+  end
+
+  def convert_amount_input(amount_input)
+    BigDecimal(amount_input.to_s)
   end
 
   def date_prettify(date)
@@ -51,7 +56,7 @@ class Account
   end
 
   def num_formatter(num)
-    "%.2f" % (BigDecimal(num.to_f.abs, 2))
+    "%.2f" % num.abs
   end
 
   def headers
