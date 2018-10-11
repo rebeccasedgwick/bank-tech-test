@@ -11,19 +11,13 @@ class Account
   end
 
   def withdraw(date_input, amount_input, transaction_class: Transaction)
-    amount = convert_amount_input(amount_input)
-    raise "Please enter a valid number" if amount.positive?
-    date = convert_date_input(date_input)
-    balance_update(amount)
-    @transactions << transaction_class.new(date, amount, @balance)
+    raise "Please enter a valid number" if amount_input.positive?
+    transact(date_input, amount_input, transaction_class)
   end
 
   def deposit(date_input, amount_input, transaction_class: Transaction)
-    amount = convert_amount_input(amount_input)
-    raise "Please enter a valid number" if !amount.positive?
-    date = convert_date_input(date_input)
-    balance_update(amount)
-    @transactions << transaction_class.new(date, amount, @balance)
+    raise "Please enter a valid number" if !amount_input.positive?
+    transact(date_input, amount_input, transaction_class)
   end
 
   def statement
@@ -39,6 +33,13 @@ class Account
   end
 
   private
+  def transact(date_input, amount_input, transaction_class)
+    amount = convert_amount_input(amount_input)
+    date = convert_date_input(date_input)
+    balance_update(amount)
+    @transactions << transaction_class.new(date, amount, @balance)
+  end
+
   def balance_update(amount)
     @balance += amount
   end
