@@ -24,10 +24,10 @@ class Account
     puts headers
     @transactions.reverse_each do |transaction|
       puts [
-        date_prettify(transaction.date).ljust(10, " "),
-        num_formatter(transaction.credit).rjust(12, " "),
-        num_formatter(transaction.debit).rjust(12, " "),
-        num_formatter(transaction.balance).rjust(12, " ")
+        prettify_date(transaction.date).ljust(10, " "),
+        format_number(transaction.credit).rjust(12, " "),
+        format_number(transaction.debit).rjust(12, " "),
+        format_number(transaction.balance).rjust(12, " ")
       ].join(" ||")
     end
   end
@@ -36,11 +36,11 @@ class Account
   def transact(date_input, amount_input, transaction_class)
     amount = convert_amount_input(amount_input)
     date = convert_date_input(date_input)
-    balance_update(amount)
+    update_balance(amount)
     @transactions << transaction_class.new(date, amount, @balance)
   end
 
-  def balance_update(amount)
+  def update_balance(amount)
     @balance += amount
   end
 
@@ -52,12 +52,12 @@ class Account
     BigDecimal(amount_input.to_s)
   end
 
-  def date_prettify(date)
+  def prettify_date(date)
     date.strftime("%d/%m/%Y")
   end
 
-  def num_formatter(num)
-    "%.2f" % num.abs
+  def format_number(number)
+    "%.2f" % number.abs
   end
 
   def headers
