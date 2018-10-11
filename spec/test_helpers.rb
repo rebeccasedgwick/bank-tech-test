@@ -27,5 +27,5 @@ def displays_statement
   expect(STDOUT).to receive(:puts).with("13/03/2013 ||        0.00 ||       50.00 ||       50.00")
   expect(STDOUT).to receive(:puts).with("12/02/2012 ||      100.00 ||        0.00 ||      100.00")
 
-  @account.statement
+  Statement.new(@account).show
 end

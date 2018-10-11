@@ -94,26 +94,4 @@ describe Account do
       end
     end
   end
-
-  describe "statement" do
-    it "has column headers displayed and pretty prints the statement transactions" do
-      tr_dbl1 = double(date: Date.new(2011, 6, 1), debit: 0.0, credit: 500.0, balance: 750.0)
-      tr_dbl2 = double(date: Date.new(2011, 5, 1), debit: 50.0, credit: 0.0, balance: 250.0)
-
-      subject.instance_variable_set(:@transactions, [tr_dbl1, tr_dbl2])
-      expected_string = "date       || credit      || debit       || balance    \n01/05/2011 ||        0.00 ||       50.00 ||      250.00\n01/06/2011 ||      500.00 ||        0.00 ||      750.00\n"
-
-      expect { subject.statement }.to output(expected_string).to_stdout
-    end
-
-    it "transactions are displayed in reverse chronological order" do
-      tr_dbl1 = double(date: Date.new(2011, 1, 1), debit: 50.0, credit: 0.0, balance: 250.0)
-      tr_dbl2 = double(date: Date.new(2011, 2, 1), debit: 0.0, credit: 500.0, balance: 750.0)
-
-      subject.instance_variable_set(:@transactions, [tr_dbl1, tr_dbl2])
-      expected_string = "date       || credit      || debit       || balance    \n01/02/2011 ||      500.00 ||        0.00 ||      750.00\n01/01/2011 ||        0.00 ||       50.00 ||      250.00\n"
-
-      expect { subject.statement }.to output(expected_string).to_stdout
-    end
-  end
 end
