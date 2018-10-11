@@ -12,12 +12,13 @@ class Account
   end
 
   def withdraw(date_input, amount_input, transaction_class: Transaction)
-    raise "Please enter a valid number" if amount_input.positive?
+    raise "Please enter a negative number" if amount_input.positive?
+    raise "Error: Insufficient funds" if insufficient_funds(amount_input)
     transact(date_input, amount_input, transaction_class)
   end
 
   def deposit(date_input, amount_input, transaction_class: Transaction)
-    raise "Please enter a valid number" if !amount_input.positive?
+    raise "Please enter a positive number" if !amount_input.positive?
     transact(date_input, amount_input, transaction_class)
   end
 
@@ -39,5 +40,9 @@ class Account
 
   def convert_amount_input(amount_input)
     BigDecimal(amount_input.to_s)
+  end
+
+  def insufficient_funds(amount_input)
+    @balance < convert_amount_input(amount_input).abs
   end
 end

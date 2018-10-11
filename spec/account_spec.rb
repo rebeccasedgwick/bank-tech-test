@@ -45,12 +45,29 @@ describe Account do
 
     context "given a positive number" do
       it "raises an error" do
-        expect { subject.withdraw(date, 100.0, transaction_class: transaction_class_double) }.to raise_error("Please enter a valid number")
+        expect { subject.withdraw(date, 100.0, transaction_class: transaction_class_double) }.to raise_error("Please enter a negative number")
       end
 
       it "doesn't decrease the balance" do
         begin
           subject.withdraw(date, 100.0, transaction_class: transaction_class_double)
+        rescue
+        end
+        expect(subject.balance).not_to eq(-100)
+      end
+    end
+
+    describe "insufficient funds" do
+      before do
+        subject.instance_variable_set(:@balance, 0)
+      end
+      it "raises an error" do
+        expect { subject.withdraw(date, -100.0, transaction_class: transaction_class_double) }.to raise_error("Error: Insufficient funds")
+      end
+
+      it "doesn't decrease the balance" do
+        begin
+          subject.withdraw(date, -100.0, transaction_class: transaction_class_double)
         rescue
         end
         expect(subject.balance).not_to eq(-100)
@@ -82,7 +99,7 @@ describe Account do
 
     context "given a negative number" do
       it "raises an error" do
-        expect { subject.deposit(date, -100.0, transaction_class: transaction_class_double) }.to raise_error("Please enter a valid number")
+        expect { subject.deposit(date, -100.0, transaction_class: transaction_class_double) }.to raise_error("Please enter a positive number")
       end
 
       it "doesn't increase the balance" do

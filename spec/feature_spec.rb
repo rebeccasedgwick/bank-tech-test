@@ -14,7 +14,7 @@ describe "Bank feature tests" do
   end
 
   describe "user can withdraw" do
-    it "when a user withdraws money, it is added to their balance" do
+    it "when a user withdraws money, it is removed from their balance" do
       create_account
       make_deposit
       make_withdrawal
