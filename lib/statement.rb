@@ -1,7 +1,7 @@
 class Statement
   HEADERS = "date       || credit      || debit       || balance    "
 
-  def initialize(account = Account)
+  def initialize(account = Account.new)
     @account = account
   end
 
